@@ -15,7 +15,7 @@ echo "Cloning the repo.."
 cd /opt
 git clone https://github.com/ShipraShalini/lifegoals.git
 virtualenv lifegoals
-cd /opt/lifegoals/
+cd /opt/lifegoals/; . bin/activate
 
 echo "Setting up the app..."
 pip install -r requirements.txt
@@ -30,5 +30,3 @@ cp conf/uwsgi.service /etc/systemd/system/
 
 systemctl enable nginx
 systemctl enable uwsgi
-
-# . See "systemctl status uwsgi.service" and "journalctl -xe" for details.
