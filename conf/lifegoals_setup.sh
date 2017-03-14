@@ -6,7 +6,7 @@ cd redis-3.2.8
 make test, make, make install
 
 yum install python-devel gcc epel-release python-pip nginx git -y
-pip install virtualenv
+pip install virtualenv uwsgi
 
 cd /opt
 git clone https://github.com/ShipraShalini/lifegoals.git
