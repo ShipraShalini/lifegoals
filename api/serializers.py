@@ -5,12 +5,7 @@ from api.models import Goal
 from api.utils import send_mail
 
 
-class UserSerializer(serializers.ModelSerializer):
-    # goals = serializers.PrimaryKeyRelatedField(many=True, queryset=Goal.objects.all())
 
-    class Meta:
-        model = User
-        fields = '__all__'
 
 
 class GoalSerializer(serializers.ModelSerializer):
@@ -21,7 +16,6 @@ class GoalSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        validated_data['user'] = self.request.user
         data = super(GoalSerializer, self).create(validated_data)
         # TODO: put delay
         send_mail(title=validated_data['title'], action='created')
@@ -33,5 +27,10 @@ class GoalSerializer(serializers.ModelSerializer):
         send_mail(title=validated_data['title'], action='updated')
         return data
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+
+class UserSerializer(serializers.ModelSerializer):
+    goals = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'is_active', 'goals')
