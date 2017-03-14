@@ -25,6 +25,7 @@ cp conf/nginx.conf /etc/nginx/conf.d/
 pub_ip="$(curl ipecho.net/plain)"
 sed -i "s/ip-here/$pub_ip/" /etc/nginx/conf.d/nginx.conf
 
+mkdir -p /var/log/uwsgi/
 cp conf/uwsgi.service /etc/systemd/system/
 
 systemctl enable nginx
