@@ -3,7 +3,7 @@ Description=uWSGI Emperor service
 
 [Service]
 ExecStartPre=/usr/bin/bash -c 'mkdir -p /run/uwsgi; chown user:nginx /run/uwsgi'
-ExecStart=/usr/bin/uwsgi --emperor /etc/uwsgi/sites
+ExecStart=/usr/bin/uwsgi --ini  /etc/uwsgi/sites
 Restart=always
 KillSignal=SIGQUIT
 Type=notify
