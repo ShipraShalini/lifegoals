@@ -29,3 +29,5 @@ cp conf/uwsgi.service /etc/systemd/system/
 
 systemctl enable nginx
 systemctl enable uwsgi
+
+# . See "systemctl status uwsgi.service" and "journalctl -xe" for details.
