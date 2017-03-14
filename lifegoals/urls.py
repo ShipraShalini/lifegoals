@@ -27,7 +27,7 @@ router.register('goals', GoalView)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^/$', lambda request: HttpResponse('Lifegoals is up and running')),
+    url(r'^$', lambda request: HttpResponse('Lifegoals is up and running')),
 ]
 
 urlpatterns += router.urls
