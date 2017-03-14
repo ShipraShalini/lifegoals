@@ -9,10 +9,12 @@ https://docs.djangoproject.com/en/1.10/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
-
+from __future__ import absolute_import
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from celery.schedules import crontab
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -126,4 +128,78 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     )
+}
+
+
+# Celery Settings
+# CELERY_ACCEPT_CONTENT = ['application/json']
+# CELERY_TASK_SERIALIZER = 'json'
+CELERY_BEAT_SCHEDULER = 'django'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'  # 'sqs;//' no support for SQS result backend for now
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ENABLE_UTC = True
+CELERY_DEFAULT_QUEUE = 'celery'
+CELERY_QUEUES = {
+    CELERY_DEFAULT_QUEUE: {
+        'exchange': CELERY_DEFAULT_QUEUE,
+        'binding_key': CELERY_DEFAULT_QUEUE,
+    }
+}
+
+CELERY_BEAT_SCHEDULE = {
+    'daily_mail': {
+        'task': 'api.utils.get_goals_by_user',
+        'schedule': crontab(minute='*')
+        # 'schedule': crontab(hour=3, minute=30)
+    }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(message)s'
+        },
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s'
+                      ' %(name)s %(module)s %(funcName)s %(lineno)d '
+                      '%(process)d %(thread)d %(message)s'
+        },
+    },
+    'handlers': {
+
+        'mail_file': {
+            'level': 'INFO',
+            'formatter': 'simple',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/mail.log'),
+            'when': 'D',
+            'interval': 1
+        },
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            # 'class': 'logutils.colorize.ColorizingStreamHandler',
+            'formatter': 'verbose'
+            # 'formatter': 'simple'
+        },
+
+    },
+
+    'loggers': {
+
+        'mail': {
+            'handlers': ['mail_file', 'console',],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    }
 }

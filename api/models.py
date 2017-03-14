@@ -13,4 +13,4 @@ class Goal(models.Model):
         db_table = 'goals'
 
     def __unicode__(self):
-        return "title: {0} \nend_date: {1} \nachieved: {2}\n\n".format(self.title, self.end_date, self.achieved)
+        return "title: {0} \nend_date: {1} \nachieved: {2}\n".format(self.title, self.end_date, self.achieved)

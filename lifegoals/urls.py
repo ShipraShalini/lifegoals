@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 
-from api.views import UserView, GoalView
+from api.views import UserView, GoalView, Goalcheck
 
 router = DefaultRouter()
 
@@ -26,6 +26,7 @@ router.register('goals', GoalView)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^goalcheck/', Goalcheck.as_view()),
 ]
 
 urlpatterns += router.urls

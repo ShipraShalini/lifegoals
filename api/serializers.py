@@ -1,11 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
+from api.mail_utils import notify_user
 from api.models import Goal
-from api.utils import send_mail
-
-
-
 
 
 class GoalSerializer(serializers.ModelSerializer):
@@ -17,14 +14,12 @@ class GoalSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         data = super(GoalSerializer, self).create(validated_data)
-        # TODO: put delay
-        send_mail(title=validated_data['title'], action='created')
+        notify_user.delay(title=validated_data['title'], action='created')
         return data
 
     def update(self, instance, validated_data):
         data = super(GoalSerializer, self).update(instance, validated_data)
-        # TODO: put delay
-        send_mail(title=validated_data['title'], action='updated')
+        notify_user.delay(title=validated_data['title'], action='updated')
         return data
 
 
