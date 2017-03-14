@@ -12,6 +12,9 @@ git clone https://github.com/ShipraShalini/lifegoals.git
 cd lifegoals/
 pip install -r requirements.txt
 cp conf/nginx.conf /etc/nginx/conf.d/
+pub_ip = "$(curl ipecho.net/plain)"
+
+sed -i "s/ip-here/$pub_ip" /etc/nginx/conf.d/nginx.conf
 cp uwsgi.service /etc/systemd/system/
 
 systemctl enable nginx
