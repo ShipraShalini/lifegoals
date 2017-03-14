@@ -15,7 +15,7 @@ echo "Cloning the repo.."
 cd /opt
 git clone https://github.com/ShipraShalini/lifegoals.git
 virtualenv lifegoals
-cd lifegoals/
+cd /opt/lifegoals/
 
 echo "Setting up the app..."
 pip install -r requirements.txt
@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 cp conf/nginx.conf /etc/nginx/conf.d/
 pub_ip="$(curl ipecho.net/plain)"
-sed -i "s/ip-here/$pub_ip" /etc/nginx/conf.d/nginx.conf
+sed -i "s/ip-here/$pub_ip/" /etc/nginx/conf.d/nginx.conf
 
 cp conf/uwsgi.service /etc/systemd/system/
 
