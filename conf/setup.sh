@@ -39,8 +39,18 @@ virtualenv venv
 cd lifegoals
 pip install -r requirements.txt
 
+# puts public ip in nginx.conf
+pub_ip="$(curl ipinfo.io/ip)"
+sed -i "s/ip-here/$pub_ip/" ./conf/nginx
+
 # place config files at correct location
 cp ./conf/nginx /etc/nginx/sites-enabled/lifegoals.conf
 cp ./conf/uwsgi.ini /opt/oggy
 
 chown uwsgi.uwsgi /opt/oggy -R
+
+deactivate
+
+uwsgi --ini /opt/oggy/uwsgi.ini
+
+service nginx restart
