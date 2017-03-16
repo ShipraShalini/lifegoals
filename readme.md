@@ -1,6 +1,8 @@
 # lifegoals
 
-1. Create a user
+1. Run `lifegoals/conf/setup.sh` to setup the server.
+
+2. Create a user
 
     ```
     $ curl 'http://localhost:8000/users/'\
@@ -16,7 +18,7 @@
                 }'
     ```
 
-2. Sign in and note the token returned.
+3. Sign in and note the token returned.
 
     ```
     $ curl 'http://localhost:8000/signin/'\
@@ -28,7 +30,7 @@
                 }'
     ```
 
-3. Create a goal with token as a header
+4. Create a goal with token as a header
 
     ```
     $ curl 'http://localhost:8000/goals/'\
@@ -41,4 +43,3 @@
                 "end_date": "2018-01-01 00:00:00"
             }'
     ```
-   
