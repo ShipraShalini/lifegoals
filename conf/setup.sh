@@ -60,11 +60,12 @@ sed -i "s/ip-here/$pub_ip/" ./conf/nginx
 # place config files at correct location
 cp ./conf/nginx.conf /etc/nginx/sites-available/default
 cp ./conf/uwsgi.ini /opt/oggy
-cp ./conf/supervisord.conf /etc/supervisor/supervisord.conf
+cp ./conf/supervisord.conf /etc/supervisor/
 
 chown uwsgi.uwsgi /opt/oggy -R
 
 deactivate
 
+/usr/local/bin/supervisord -c /etc/supervisor/supervisord.conf
 
 service nginx restart
