@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Installing dependencies"
-yum install python-devel gcc epel-release python-pip nginx git -y
+yum install epel-release python-devel gcc  python-pip nginx git -y
 pip install virtualenv uwsgi
 
 echo "Installing redis..."
@@ -21,7 +21,7 @@ echo "Setting up the app..."
 pip install -r requirements.txt
 
 
-cp conf/nginx.conf /etc/nginx/conf.d/
+cp conf/nginx.conf /etc/nginx/conf.d/lifegoals.conf
 pub_ip="$(curl ipecho.net/plain)"
 sed -i "s/ip-here/$pub_ip/" /etc/nginx/conf.d/nginx.conf
 
@@ -30,3 +30,5 @@ cp conf/uwsgi.service /etc/systemd/system/
 
 systemctl enable nginx
 systemctl enable uwsgi
+
+deactivate
