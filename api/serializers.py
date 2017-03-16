@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from api.mail_utils import notify_user
 from api.models import Goal
@@ -29,3 +30,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'is_active', 'goals')
+
+    def create(self, validated_data):
+        if not validated_data.get('password', None):
+            raise ValidationError('Password is required to create a user')
