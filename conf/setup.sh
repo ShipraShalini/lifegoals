@@ -38,6 +38,8 @@ virtualenv venv
 
 cd lifegoals
 pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
 
 # puts public ip in nginx.conf
 pub_ip="$(curl ipinfo.io/ip)"
