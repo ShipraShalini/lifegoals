@@ -25,12 +25,14 @@ class GoalSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    goals = serializers.StringRelatedField(many=True)
+    goals = serializers.StringRelatedField(many=True, required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'is_active', 'goals')
+        fields = ('username', 'first_name', 'last_name', 'email', 'is_active', 'goals', 'password')
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
     def create(self, validated_data):
-        if not validated_data.get('password', None):
-            raise ValidationError('Password is required to create a user')
+        return User.objects.create_user(**validated_data)
