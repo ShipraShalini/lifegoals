@@ -17,7 +17,8 @@ apt-get install python-dev gcc python-pip nginx -y
 pip install pip --upgrade
 
 # Install python tools
-/usr/local/bin/pip install virtualenv uwsgi uwsgitop
+/usr/local/bin/pip install virtualenv uwsgi uwsgitop supervisor
+
 
 # create user for the app
 mkdir -p /opt/oggy
@@ -26,6 +27,15 @@ touch /var/run/uwsgi.pid
 
 mkdir -p /var/log/uwsgi
 touch /var/log/uwsgi/lifegoals.log
+
+mkdir -p /var/log/supervisord
+touch /var/log/supervisord/supervisor.log
+
+mkdir -p /var/log/celery
+touch /var/log/celery/worker.log
+touch /var/log/celery/beat.log
+
+mkdir -p /etc/supervisor/supervisord.conf
 
 # Switch to the working dir.
 cd /opt/oggy
@@ -50,11 +60,11 @@ sed -i "s/ip-here/$pub_ip/" ./conf/nginx
 # place config files at correct location
 cp ./conf/nginx.conf /etc/nginx/sites-available/default
 cp ./conf/uwsgi.ini /opt/oggy
+cp ./conf/supervisord.conf /etc/supervisor/supervisord.conf
 
 chown uwsgi.uwsgi /opt/oggy -R
 
 deactivate
 
-uwsgi --ini /opt/oggy/uwsgi.ini
 
 service nginx restart
