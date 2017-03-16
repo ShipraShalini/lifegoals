@@ -38,6 +38,8 @@ virtualenv venv
 
 cd lifegoals
 pip install -r requirements.txt
+
+# migrations
 python manage.py makemigrations
 python manage.py migrate
 
