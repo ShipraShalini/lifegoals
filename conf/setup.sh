@@ -44,7 +44,7 @@ pub_ip="$(curl ipinfo.io/ip)"
 sed -i "s/ip-here/$pub_ip/" ./conf/nginx
 
 # place config files at correct location
-cp ./conf/nginx /etc/nginx/sites-enabled/lifegoals.conf
+cp ./conf/nginx.conf /etc/nginx/sites-available/default
 cp ./conf/uwsgi.ini /opt/oggy
 
 chown uwsgi.uwsgi /opt/oggy -R
