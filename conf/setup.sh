@@ -56,7 +56,7 @@ python manage.py migrate
 
 # puts public ip in nginx.conf
 pub_ip="$(curl ipinfo.io/ip)"
-sed -i "s/ip-here/$pub_ip/" ./conf/nginx
+sed -i "s/ip-here/$pub_ip/" ./conf/nginx.conf
 
 # place config files at correct location
 cp ./conf/nginx.conf /etc/nginx/sites-available/default
