@@ -35,7 +35,7 @@ mkdir -p /var/log/celery
 touch /var/log/celery/worker.log
 touch /var/log/celery/beat.log
 
-mkdir -p /etc/supervisor/supervisord.conf
+mkdir -p /etc/supervisor/
 
 # Switch to the working dir.
 cd /opt/oggy
