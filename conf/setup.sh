@@ -2,6 +2,7 @@
 
 # Remove old caches and update
 apt-get clean
+apt-get update
 apt-get upgrade -y
 
 # Install dev tools
